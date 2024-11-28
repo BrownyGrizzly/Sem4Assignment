@@ -1,4 +1,4 @@
-package com.examt2303m.dypham.util;
+package com.example.practicaltest.util;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;

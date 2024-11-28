@@ -1,9 +1,8 @@
-package com.examt2303m.dypham.service;
+package com.example.practicaltest.service;
 
-
-import com.examt2303m.dypham.entity.Player;
-import com.examt2303m.dypham.repository.PlayerRepository;
-import com.examt2303m.dypham.repository.impl.PlayerRepositoryImpl;
+import com.example.practicaltest.entity.Player;
+import com.example.practicaltest.repository.PlayerRepository;
+import com.example.practicaltest.repository.impl.PlayerRepositoryImpl;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.examt2303m.dypham.service;
+package com.example.practicaltest.service;
 
-import com.examt2303m.dypham.entity.Indexer;
-import com.examt2303m.dypham.repository.IndexerRepository;
-import com.examt2303m.dypham.repository.impl.IndexerRepositoryImpl;
+import com.example.practicaltest.entity.Indexer;
+import com.example.practicaltest.repository.IndexerRepository;
+import com.example.practicaltest.repository.impl.IndexerRepositoryImpl;
 
 import java.util.List;
 

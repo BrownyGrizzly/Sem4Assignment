@@ -1,4 +1,4 @@
-package com.examt2303m.dypham.dto;
+package com.example.practicaltest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

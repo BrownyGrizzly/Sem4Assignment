@@ -1,9 +1,8 @@
-package com.examt2303m.dypham.repository.impl;
+package com.example.practicaltest.repository.impl;
 
-import com.examt2303m.dypham.entity.Player;
-import com.examt2303m.dypham.entity.PlayerIndex;
-import com.examt2303m.dypham.repository.PlayerRepository;
-import com.examt2303m.dypham.util.HIbernateUtil;
+import com.example.practicaltest.entity.Player;
+import com.example.practicaltest.repository.PlayerRepository;
+import com.example.practicaltest.util.HIbernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

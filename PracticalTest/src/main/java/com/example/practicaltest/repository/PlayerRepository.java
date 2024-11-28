@@ -1,6 +1,7 @@
-package com.examt2303m.dypham.repository;
+package com.example.practicaltest.repository;
 
-import com.examt2303m.dypham.entity.Player;
+
+import com.example.practicaltest.entity.Player;
 
 import java.util.List;
 

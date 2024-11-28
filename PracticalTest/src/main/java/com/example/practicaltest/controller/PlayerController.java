@@ -1,12 +1,12 @@
-package com.examt2303m.dypham.controller;
+package com.example.practicaltest.controller;
 
-import com.examt2303m.dypham.dto.ViewListPlayer;
-import com.examt2303m.dypham.entity.Indexer;
-import com.examt2303m.dypham.entity.Player;
-import com.examt2303m.dypham.entity.PlayerIndex;
-import com.examt2303m.dypham.service.IndexerService;
-import com.examt2303m.dypham.service.PlayerIndexService;
-import com.examt2303m.dypham.service.PlayerService;
+import com.example.practicaltest.dto.ViewListPlayer;
+import com.example.practicaltest.entity.Indexer;
+import com.example.practicaltest.entity.Player;
+import com.example.practicaltest.entity.PlayerIndex;
+import com.example.practicaltest.service.IndexerService;
+import com.example.practicaltest.service.PlayerIndexService;
+import com.example.practicaltest.service.PlayerService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;

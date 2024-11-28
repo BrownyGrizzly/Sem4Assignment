@@ -1,8 +1,7 @@
-package com.examt2303m.dypham.entity;
+package com.example.practicaltest.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
-
-import javax.persistence.*;
 
 @Data
 @Entity

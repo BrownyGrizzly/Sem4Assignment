@@ -1,8 +1,9 @@
-package com.examt2303m.dypham.repository;
+package com.example.practicaltest.repository;
 
-import com.examt2303m.dypham.entity.Indexer;
-import com.examt2303m.dypham.entity.Player;
-import com.examt2303m.dypham.entity.PlayerIndex;
+
+import com.example.practicaltest.entity.Indexer;
+import com.example.practicaltest.entity.Player;
+import com.example.practicaltest.entity.PlayerIndex;
 
 import java.util.List;
 
