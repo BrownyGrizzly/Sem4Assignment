@@ -1,9 +1,14 @@
-package com.example.practicaltest.controller;
+package com.examt2303m.dypham.controller;
 
-import com.example.practicaltest.entity.Indexer;
-import com.example.practicaltest.entity.Player;
-import com.example.practicaltest.entity.PlayerIndex;
-import com.example.practicaltest.service.PlayerService;
+import com.examt2303m.dypham.dto.ViewListPlayer;
+import com.examt2303m.dypham.entity.Indexer;
+import com.examt2303m.dypham.entity.Player;
+import com.examt2303m.dypham.entity.PlayerIndex;
+import com.examt2303m.dypham.service.IndexerService;
+import com.examt2303m.dypham.service.PlayerIndexService;
+import com.examt2303m.dypham.service.PlayerService;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,61 +19,79 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/players")
+@WebServlet(value = "/player")
 public class PlayerController extends HttpServlet {
 
-    private final PlayerService playerService = new PlayerService();
+    private PlayerService playerService;
+    private IndexerService indexerService;
+    private PlayerIndexService playerIndexService;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ServletException, IOException {
-        // Retrieve all players and indexers for the form and table
-        List<Player> players = playerService.getAllPlayers();
-        List<Indexer> indexers = playerService.getAllIndexers();
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        this.playerService = new PlayerService();
+        this.indexerService = new IndexerService();
+        this.playerIndexService = new PlayerIndexService();
+    }
 
-        // Set attributes for the JSP
-        request.setAttribute("players", players);
-        request.setAttribute("indexers", indexers);
 
-        // Forward to the JSP (index.jsp)
-        request.getRequestDispatcher("/players.jsp").forward(request, response);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+
+            List<Player> listPlayer = playerService.getAll();
+            List<Indexer> listIndex = indexerService.getAll();
+            List<ViewListPlayer> viewListPlayerList = new ArrayList<>();
+            for (Player player : listPlayer) {
+                ViewListPlayer viewListPlayer = new ViewListPlayer();
+                viewListPlayer.setId(player.getPlayerId());
+                viewListPlayer.setName(player.getName());
+                viewListPlayer.setAge(player.getAge());
+                viewListPlayer.setIndexName(player.getIndexer().getName());
+                PlayerIndex playerIndex = playerIndexService.getPlayerIndexByPlayerAndIndexer(player, player.getIndexer());
+                viewListPlayer.setValue(playerIndex.getValue());
+                viewListPlayerList.add(viewListPlayer);
+            }
+
+            req.setAttribute("viewListPlayerList", viewListPlayerList);
+            req.setAttribute("indexer", listIndex);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("player.jsp");
+            dispatcher.forward(req, resp);
+        }catch (Exception e) {
+
+        }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String playerName = request.getParameter("playerName");
-        String playerAge = request.getParameter("playerAge");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
 
-        String[] indexIds = request.getParameterValues("indexId");
-        String[] values = request.getParameterValues("value");
+            // Lấy dữ liệu từ form
+            String playerName = req.getParameter("name");
+            String playerAge = String.valueOf(req.getParameter("age"));
+            int indexId = Integer.parseInt(req.getParameter("indexId"));
+            float value = Float.parseFloat(req.getParameter("value"));
 
-        Player player = new Player();
-        player.setName(playerName);
-        player.setFullName(playerName);
-        player.setAge(playerAge);
+            // Tạo đối tượng Player
+            Indexer indexer = indexerService.getIndexerById(indexId);
 
-        List<PlayerIndex> playerIndexes = new ArrayList<>();
+            Player player = new Player();
+            player.setName(playerName);
+            player.setFullName(playerName);
+            player.setAge(playerAge);
+            player.setIndexer(indexer);
 
-        for (int i = 0; i < indexIds.length; i++) {
-            int indexId = Integer.parseInt(indexIds[i]);
-            float value = Float.parseFloat(values[i]);
-
-            // Fetch the Indexer from the database
-            Indexer indexer = playerService.getIndexerById(indexId);
-            if (indexer == null) {
-                throw new RuntimeException("Indexer with ID " + indexId + " not found!");
-            }
+            playerService.savePlayer(player);
 
             PlayerIndex playerIndex = new PlayerIndex();
+            playerIndex.setPlayer(player);
             playerIndex.setIndexer(indexer);
             playerIndex.setValue(value);
-            playerIndex.setPlayer(player);
-
-            playerIndexes.add(playerIndex);
+            playerIndexService.savePlayerIndex(playerIndex);
+            resp.sendRedirect(req.getContextPath() + "/player");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.getWriter().write("Error: " + e.getMessage());
         }
-
-        // Save player and associated indexes
-        playerService.addPlayer(player, playerIndexes);
-
-        response.sendRedirect(request.getContextPath() + "/players");
     }
 }

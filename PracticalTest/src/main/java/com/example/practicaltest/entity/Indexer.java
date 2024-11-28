@@ -1,19 +1,26 @@
-package com.example.practicaltest.entity;
+package com.examt2303m.dypham.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Indexer {
+@Table(name = "indexer")
+    public class Indexer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int indexId;
+    @Column(name = "index_id")
+    private Integer indexId;
 
+    @Column(name = "name", nullable = false)
     private String name;
-    private float valueMin;
-    private float valueMax;
+
+    @Column(name = "valueMin", nullable = false)
+    private Float valueMin;
+
+    @Column(name = "valueMax", nullable = false)
+    private Float valueMax;
+
 }

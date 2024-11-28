@@ -1,25 +1,27 @@
-package com.example.practicaltest.entity;
+package com.examt2303m.dypham.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+@Table(name = "player_index")
 public class PlayerIndex {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "id")
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "player_id")
+    @JoinColumn(name = "player_id", referencedColumnName = "player_id", nullable = false)
     private Player player;
 
     @ManyToOne
-    @JoinColumn(name = "index_id")
+    @JoinColumn(name = "index_id", referencedColumnName = "index_id", nullable = false)
     private Indexer indexer;
 
-    private float value;
+    @Column(name = "value", nullable = false)
+    private Float value;
+
 }

@@ -1,20 +1,19 @@
-package com.example.practicaltest.repository;
+package com.examt2303m.dypham.repository;
 
-import com.example.practicaltest.entity.Indexer;
-import com.example.practicaltest.entity.Player;
-import com.example.practicaltest.entity.PlayerIndex;
+import com.examt2303m.dypham.entity.Player;
 
 import java.util.List;
 
 public interface PlayerRepository {
-    // CRUD operations for Player
+
     List<Player> findAll();
+
     void save(Player player);
-    Player findById(int playerId);
-    void delete(int playerId);
 
-    // CRUD operations for PlayerIndex
-    void savePlayerIndex(PlayerIndex playerIndex);
-    void deletePlayerIndex(int playerId, int indexId);
+    Player findById(int id);
+
+    void update(Player player);
+
+    void delete(int id);
+
 }
-

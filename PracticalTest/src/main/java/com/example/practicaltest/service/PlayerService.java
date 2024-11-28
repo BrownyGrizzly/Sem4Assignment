@@ -1,60 +1,40 @@
-package com.example.practicaltest.service;
+package com.examt2303m.dypham.service;
 
-import com.example.practicaltest.entity.Indexer;
-import com.example.practicaltest.entity.Player;
-import com.example.practicaltest.entity.PlayerIndex;
-import com.example.practicaltest.repository.IndexerRepository;
-import com.example.practicaltest.repository.PlayerRepository;
-import com.example.practicaltest.repository.impl.IndexerRepositoryImpl;
-import com.example.practicaltest.repository.impl.PlayerRepositoryImpl;
+
+import com.examt2303m.dypham.entity.Player;
+import com.examt2303m.dypham.repository.PlayerRepository;
+import com.examt2303m.dypham.repository.impl.PlayerRepositoryImpl;
 
 import java.util.List;
 
 public class PlayerService {
 
     private final PlayerRepository playerRepository;
-    private final IndexerRepository indexerRepository;
 
     public PlayerService() {
         this.playerRepository = new PlayerRepositoryImpl();
-        this.indexerRepository = new IndexerRepositoryImpl();
     }
 
-    public List<Player> getAllPlayers() {
+    public List<Player> getAll() throws Exception {
         return playerRepository.findAll();
     }
 
-    public void addPlayer(Player player, List<PlayerIndex> playerIndexes) {
-        // Save player
+    public Player getPlayerById(int id) throws Exception {
+        Player player = playerRepository.findById(id);
+        if(player == null){
+            throw new Exception("Indexer not found!");
+        }
+        return player;
+    }
+
+    public void savePlayer(Player player){
+        if(player.getName().isEmpty() || player.getName().length()<2){
+            throw new IllegalArgumentException("Please input name");
+        }
         playerRepository.save(player);
-
-        // Save player index data (this will create player_index entries)
-        for (PlayerIndex playerIndex : playerIndexes) {
-            playerIndex.setPlayer(player); // Link to the player
-            playerRepository.savePlayerIndex(playerIndex);
-        }
     }
 
-    public void deletePlayer(int playerId) {
-        playerRepository.delete(playerId);
-    }
-
-    public void deletePlayerIndex(int playerId, int indexId) {
-        playerRepository.deletePlayerIndex(playerId, indexId);
-    }
-
-    public Indexer getIndexerById(int indexId) {
-        // Use the IndexerRepository to find an Indexer by its ID
-        Indexer indexer = indexerRepository.findById(indexId);
-        if (indexer == null) {
-            throw new RuntimeException("Indexer with ID " + indexId + " not found!");
-        }
-        return indexer;
-    }
-
-    public List<Indexer> getAllIndexers() {
-        // Use the IndexerRepository to retrieve all Indexers
-        return indexerRepository.findAll();
+    public void deletePlayer(int id){
+        playerRepository.delete(id);
     }
 }
-
