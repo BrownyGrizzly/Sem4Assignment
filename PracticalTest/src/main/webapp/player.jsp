@@ -19,7 +19,7 @@
     </c:if>
 
     <!-- Player Form -->
-    <form action="${pageContext.request.contextPath}/players?action=ADD" method="POST" class="mb-5" onsubmit="return validateForm()">
+    <form action="${pageContext.request.contextPath}/player?action=ADD" method="POST" class="mb-5" onsubmit="return validateForm()">
         <div class="row">
             <!-- Player name and age -->
             <div class="col-md-6">
@@ -81,8 +81,8 @@
                 <td>${player.age}</td>
                 <td>${player.index_name}</td>
                 <td>${player.value}</td>
-                <td><a href="players?action=EDIT&id=${player.player_id}" class="btn btn-warning">Edit</a></td>
-                <td><a href="players?action=DELETE&id=${player.player_id}" class="btn btn-danger">Delete</a></td>
+                <td><a href="player?action=EDIT&id=${player.player_id}" class="btn btn-warning">Edit</a></td>
+                <td><a href="player?action=DELETE&id=${player.player_id}" class="btn btn-danger">Delete</a></td>
             </tr>
         </c:forEach>
         </tbody>
