@@ -19,19 +19,19 @@
     </c:if>
 
     <!-- Player Form -->
-    <form action="${pageContext.request.contextPath}/player?action=ADD" method="POST" class="mb-5" onsubmit="return validateForm()">
+    <form action="${pageContext.request.contextPath}/player" method="POST" class="mb-5" onsubmit="return validateForm()">
         <div class="row">
             <!-- Player name and age -->
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="playerName">Player Name</label>
-                    <input type="text" class="form-control" id="playerName" name="playerName" required>
+                    <label for="name">Player Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="playerAge">Player Age</label>
-                    <input type="text" class="form-control" id="playerAge" name="playerAge" pattern="^[0-9]{1,2}$" title="Age should be a number (1-99)" required>
+                    <label for="age">Player Age</label>
+                    <input type="text" class="form-control" id="age" name="age" pattern="^[0-9]{1,2}$" title="Age should be a number (1-99)" required>
                 </div>
             </div>
         </div>
@@ -39,12 +39,12 @@
             <!-- Index name and value -->
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="indexName">Index Name</label>
-                    <select class="form-control" id="indexName" name="indexName" required>
+                    <label for="indexId">Index Name</label>
+                    <select class="form-control" id="indexId" name="indexId" required>
                         <option value="">Select Index</option>
-                        <option value="speed">Speed</option>
-                        <option value="strength">Strength</option>
-                        <option value="accurate">Accurate</option>
+                        <c:forEach var="indexer" items="${indexer}">
+                            <option value="${indexer.id}">${indexer.name}</option>
+                        </c:forEach>
                     </select>
                 </div>
             </div>
@@ -74,15 +74,15 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="player" items="${playerList}">
+        <c:forEach var="player" items="${viewListPlayerList}">
             <tr>
-                <td>${player.player_id}</td>
+                <td>${player.id}</td>
                 <td>${player.name}</td>
                 <td>${player.age}</td>
-                <td>${player.index_name}</td>
+                <td>${player.indexName}</td>
                 <td>${player.value}</td>
-                <td><a href="player?action=EDIT&id=${player.player_id}" class="btn btn-warning">Edit</a></td>
-                <td><a href="player?action=DELETE&id=${player.player_id}" class="btn btn-danger">Delete</a></td>
+                <td><a href="player?action=EDIT&id=${player.id}" class="btn btn-warning">Edit</a></td>
+                <td><a href="player?action=DELETE&id=${player.id}" class="btn btn-danger">Delete</a></td>
             </tr>
         </c:forEach>
         </tbody>
@@ -96,20 +96,20 @@
 <script>
     // Custom JavaScript validation (optional)
     function validateForm() {
-        var playerName = document.getElementById("playerName").value;
-        var playerAge = document.getElementById("playerAge").value;
-        var indexName = document.getElementById("indexName").value;
+        var name = document.getElementById("name").value;
+        var age = document.getElementById("age").value;
+        var indexId = document.getElementById("indexId").value;
         var value = document.getElementById("value").value;
 
-        if (playerName.trim() == "") {
+        if (name.trim() == "") {
             alert("Player name must be filled out");
             return false;
         }
-        if (isNaN(playerAge) || playerAge < 1 || playerAge > 99) {
+        if (isNaN(age) || age < 1 || age > 99) {
             alert("Player age must be a number between 1 and 99");
             return false;
         }
-        if (indexName == "") {
+        if (indexId == "") {
             alert("Please select an index");
             return false;
         }

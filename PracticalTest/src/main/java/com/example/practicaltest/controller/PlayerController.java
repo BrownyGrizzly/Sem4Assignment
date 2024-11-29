@@ -57,7 +57,7 @@ public class PlayerController extends HttpServlet {
             req.setAttribute("indexer", listIndex);
             RequestDispatcher dispatcher = req.getRequestDispatcher("player.jsp");
             dispatcher.forward(req, resp);
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
     }
